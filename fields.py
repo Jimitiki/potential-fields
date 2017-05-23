@@ -11,10 +11,13 @@ class field_holder:
         self.fields = []
         
     def get_field(self, x, y):
-        result_field = (0.0, 0.0)
+        result_field_x = 0.0
+        result_field_y = 0.0
         for field in self.fields:
-            result_field += field.get_field(x, y)
-        return result_field
+            (field_x, field_y) = field.get_field(x, y)
+            result_field_x += field_x
+            result_field_y += field_y
+        return (result_field_x, result_field_y)
     
     def add_field(self, field):
         self.fields.append(field)
