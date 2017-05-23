@@ -1,4 +1,5 @@
 import math
+import random
 
 #class vector:
 #    def __init__(self, x, y):
@@ -65,6 +66,14 @@ class infinate_constant_attractive_field:
         angle = math.atan2(dy, dx)                
         return (-self.strength * math.cos(angle), -self.strength * math.sin(angle))        
 
+class random_field:
+    def __init__(self, strength):
+        self.strength = strength       
+       
+    def get_field(self, x, y):
+        angle = random.random() * 2 * math.pi
+        return (self.strength * math.cos(angle), self.strength * math.sin(angle))        
+
 class fixed_position_tracker:
     def __init__(self, x, y):
         self.x = x
@@ -85,6 +94,3 @@ class variable_position_tracker:
         self.x = x
         self.y = y        
         
-h = field_holder()
-h.add_field(constant_repulsive_field(fixed_position_tracker(0, 10), 10, 10))
-print(h.get_field(0, 0))
