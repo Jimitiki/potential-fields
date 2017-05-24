@@ -3,19 +3,36 @@ import fields
 import socket
 import math
 import mathutils
+from time import sleep
 
 ADDRESS = ("0.0.0.0", 55555)
+BASE_TURN_SPEED = 12
+BASE_MOVE_SPEED = 6
+ROTATE_DELAY = 0.875 / math.pi / 2
 
-def follow_vector(vec_x, vec_y):
+def follow_vector(vec_x, vec_y, goal_pos):
     normal_vector = mathutils.normalize(vec_x, vec_y)
-    orientation = commands.where_robot()["orientation"]
-    angle = math.acos(mathutils.dot_product(normal_vector, orientation))
+    where = commands.where_robot()
+    print(where["center"])
+    position = where["center"]
+    distance = mathutils.distance(position, goal_pos)
+    print(distance)
+    if (distance < 30):
+        return 0
+    orientation = where["orientation"]
+
+    angle = mathutils.signed_angle(normal_vector, orientation)
     magnitude = mathutils.magnitude(vec_x, vec_y)
-    if angle > 0.1:
-        commands.set_speed(3, -3)
+    if math.fabs(angle) > 0.15:
+        turn_speed = BASE_TURN_SPEED if angle > 0 else -BASE_TURN_SPEED
+        commands.set_speed(turn_speed , -turn_speed)
+        sleep(max(math.fabs(ROTATE_DELAY * angle), 0.02))
+        commands.set_speed(0, 0)
         return 1
     elif magnitude > 0.5:
-        commands.set_speed(int(magnitude), int(magnitude))
+        commands.set_speed(BASE_MOVE_SPEED, BASE_MOVE_SPEED)
+        sleep(1)
+        commands.set_speed(0, 0)
         return 1
     return 0
 
@@ -23,7 +40,6 @@ def get_robot_position():
     location = commands.where_robot()["center"]
 
     return location
-
 #set up fields
 #f = fields.field_holder()
 #position = fields.fixed_position_tracker(10, 10)
