@@ -1,5 +1,6 @@
 import math
 import random
+import sys
 
 #class vector:
 #    def __init__(self, x, y):
@@ -38,7 +39,7 @@ class linear_repulsive_field:
         diff = self.size - mag
         if diff < 0:
             return (0.0, 0.0)
-        power = self.strength * (diff / size)
+        power = self.strength * (diff / self.size)
         return (power * math.cos(angle), power * math.sin(angle))
 
 class constant_repulsive_field:
@@ -97,3 +98,27 @@ class variable_position_tracker:
         self.x = x
         self.y = y        
         
+def draw_field(fields, min_x, min_y, max_x, max_y, res_x, res_y):
+    y = min_y    
+    while y < max_y:
+        x = min_x
+        while x < max_x:
+            (field_x, field_y) = fields.get_field(x, y)
+            if abs(field_x) > abs(field_y):
+                if field_x > 0:
+                    sys.stdout.write('>')
+                else:                
+                    sys.stdout.write('<')
+            else:
+                if field_y > 0:
+                    sys.stdout.write('v')
+                else:
+                    sys.stdout.write('^')                    
+            x += (max_x - min_x) / (1.0 * res_x)
+        print('')
+        y += (max_y - min_y) / (1.0 * res_y)
+                    
+f = field_holder()
+f.add_field(infinate_constant_attractive_field(fixed_position_tracker(0, 0), 10))
+f.add_field(linear_repulsive_field(fixed_position_tracker(0, 5), 5, 20))
+draw_field(f, -10, -10, 10, 20, 100, 100)
