@@ -21,5 +21,6 @@ def signed_angle(u, v):
 
 def distance(p1, p2):
     dx = p1[0] - p2[0]
-    dy = p2[1] - p2[1]
+    dy = p1[1] - p2[1]
+    print(dx, dy)
     return math.sqrt(dx * dx + dy * dy)

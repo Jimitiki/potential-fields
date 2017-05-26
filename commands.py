@@ -7,7 +7,7 @@ def open_connection(address):
     global s
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(address)
-    res = s.recv(1024)
+    #res = s.recv(1024)
 
 def send_command(command):
     global s
