@@ -16,7 +16,7 @@ def follow_vector(vec_x, vec_y, goal_pos):
     position = where["center"]
     distance = mathutils.distance(position, goal_pos)
     print(distance)
-    if (distance < 50):
+    if (distance < 80):
         commands.set_speed(0, 0)
         return True
     orientation = where["orientation"]
@@ -24,10 +24,9 @@ def follow_vector(vec_x, vec_y, goal_pos):
     angle = mathutils.signed_angle(normal_vector, orientation)
     magnitude = mathutils.magnitude(vec_x, vec_y)
     angle = angle / (math.pi) + 1
-    left = int(round(magnitude * (angle - 0.5)))
-    right = int(round(magnitude * (1.5 - angle)))
-    print(left, right)
-    commands.set_speed(left, right)
+    left = magnitude * (angle - 0.5)
+    right = magnitude * (1.5 - angle)
+    commands.set_speed(int(left), int(right))
     sleep(0.05)
     return False
 
