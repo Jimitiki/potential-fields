@@ -23,6 +23,10 @@ class field_holder:
     def add_field(self, field):
         self.fields.append(field)
             
+    def remove_attractive_fields(self):
+        for field in self.fields:
+            if isinstance(field, infinate_constant_attractive_field):
+                self.fields.remove(field)
     
 class linear_repulsive_field:
     def __init__(self, position_tracker, size, strength):
