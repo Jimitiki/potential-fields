@@ -2,6 +2,8 @@ import math
 
 def normalize(x, y):
     m = magnitude(x, y)
+    if (m == 0):
+        return (0, 0)
     return (x / m, y / m)
 
 def magnitude(x, y):
