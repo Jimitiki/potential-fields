@@ -46,6 +46,22 @@ class linear_repulsive_field:
         power = self.strength * (diff / self.size)
         return (power * math.cos(angle), power * math.sin(angle))
 
+class constant_attractive_field:
+    def __init__(self, position_tracker, size, strength):
+        self.position_tracker = position_tracker
+        self.size = size
+        self.strength = strength
+
+    def get_field(self, x, y):
+        (px, py) = self.position_tracker.get_position()
+        dy = y - py
+        dx = x - px
+        angle = math.atan2(dy, dx)
+        mag = math.sqrt(dy * dy + dx * dx)
+        if mag > self.size:
+            return (0.0, 0.0)
+        return (-self.strength * math.cos(angle), -self.strength * math.sin(angle))
+
 class constant_repulsive_field:
     def __init__(self, position_tracker, size, strength):
         self.position_tracker = position_tracker
