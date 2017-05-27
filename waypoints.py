@@ -9,7 +9,7 @@ class waypoints:
         self.waypoints.append((x, y, strength))
         if len(self.waypoints) == 1:
             self.field_holder.add_field(fields.infinate_constant_attractive_field(fields.fixed_position_tracker(x, y), strength))
-
+            
     def get_waypoint(self):
         return self.waypoints[0]
 
