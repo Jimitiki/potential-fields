@@ -10,11 +10,11 @@ commands.open_connection(ADDRESS)
 
 markers = commands.where_markers()
 
-goal = markers[str(20)]["center"]
+goal = markers[str(4)]["center"]
 
-field1 = markers[str(24)]["center"]
-field2 = markers[str(22)]["center"]
-field3 = markers[str(27)]["center"]
+field1 = markers[str(30)["center"]
+field2 = markers[str(31)["center"]
+field3 = markers[str(33)]["center"]
 
 f = fields.field_holder()
 w = waypoints.waypoints(f)
